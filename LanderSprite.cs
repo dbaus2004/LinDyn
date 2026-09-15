@@ -15,6 +15,7 @@ public class LanderSprite
 {
     Texture2D texture;
     Vector2 position;
+    Vector2 velocity;
 
     /// <summary>
     /// Constructs a new lander sprite 
@@ -22,6 +23,7 @@ public class LanderSprite
     public LanderSprite()
     {
         position = new Vector2(0, 50);
+        velocity = new Vector2(10, 0);
     }
 
     /// <summary>
@@ -40,7 +42,17 @@ public class LanderSprite
     public void Update(GameTime gameTime)
     {
         KeyboardState keyboardState = Keyboard.GetState();
+        float t = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+        Vector2 acceleration = new Vector2(0, 30);
+
+        if (keyboardState.IsKeyDown(Keys.Space))
+        {
+            acceleration += new Vector2(0, -50);
+        }
+
+        velocity += acceleration * t;
+        position += velocity * t;
     }
 
     /// <summary>
